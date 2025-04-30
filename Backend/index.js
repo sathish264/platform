@@ -1,23 +1,25 @@
 const express= require('express')
 const product= require("./product.json")
+const dotenv = require('dotenv').config()
 const app= express()
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
 var mysql = require('mysql2')
-const port =8080;
 
-let sceretKey="my_sceret_key"
+
+let sceretKey=process.env.Jwtsceretkey
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
 // Database Connection
+let port = process.env.PORT || 8080
 let con = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'Sathish@19',
-        database:'ecomerce'
+        host: process.env.DB_HOST,
+        user:process.env.DB_User,
+        password:process.env.DB_password,
+        database:process.env.DB_database
 })
 con.connect(function(err){
        if(err) throw err;
